@@ -9,14 +9,6 @@
 #define MAX_MSG_LEN 20
 #define PORT 8080
 
-int is_prime(int num) {
-    if (num < 2) return 0;
-    for (int i = 2; i <= num/2; i++) {
-        if (num % i == 0) return 0;
-    }
-    return 1;
-}
-
 int main(int argc, char const *argv[]) {
     srand(time(NULL)); // semente para números aleatórios
 
@@ -57,7 +49,7 @@ int main(int argc, char const *argv[]) {
     current_number = 1;
     for (int i = 0; i < num_values; i++) {
         delta = rand() % 100 + 1;
-
+        printf("Número %d enviado ao consumidor\n", current_number);
         // conversão do número para uma string de tamanho fixo
         snprintf(msg, MAX_MSG_LEN, "%d", current_number);
 
@@ -73,9 +65,9 @@ int main(int argc, char const *argv[]) {
 
         // impressão do resultado
         if (strcmp(msg, "1") == 0) {
-            printf("%d é primo\n", current_number);
+            printf("Resposta recebida pelo consumidor: %d é primo\n", current_number);
         } else {
-            printf("%d não é primo\n", current_number);
+            printf("Resposta recebida do consumidor: %d não é primo\n", current_number);
         }
 
         current_number += delta;

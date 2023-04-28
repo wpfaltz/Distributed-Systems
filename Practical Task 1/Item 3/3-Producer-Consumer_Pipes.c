@@ -23,14 +23,14 @@ void producer(int pipefd[], int num_elements) {
     int current_number = 1;
     printf("%d enviado pelo produtor ao pipe\n", current_number);
 
-    for (int i = 1; i < num_elements; i++) {
+    for (int i = 0; i < num_elements; i++) {
         int delta = (rand() % 100) + 1;
-        current_number += delta;
         printf("%d enviado pelo produtor ao pipe\n", current_number);
 
         char buffer[BUFFER_SIZE];
         snprintf(buffer, BUFFER_SIZE, "%d", current_number);
         write(pipefd[PIPE_WRITE], buffer, BUFFER_SIZE);
+        current_number += delta;
     }
 
     char buffer[BUFFER_SIZE] = "0";
