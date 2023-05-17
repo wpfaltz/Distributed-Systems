@@ -10,9 +10,11 @@ void handleSignal(int signalNumber) {
     switch(signalNumber) {
         case SIGUSR1:
             printf("Recebi o sinal SIGUSR1.\n");
+            keepRunning = 0;
             break;
         case SIGUSR2:
             printf("Recebi o sinal SIGUSR2.\n");
+            keepRunning = 0;
             break;
         case SIGTERM:
             printf("Recebi o sinal SIGTERM. Terminando...\n");
