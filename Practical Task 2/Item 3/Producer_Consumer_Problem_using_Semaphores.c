@@ -9,14 +9,17 @@
 
 #define M 100000 // número de elementos a serem processados pelo consumidor
 
-int N, np, nc, filled_positions; // tamanho do buffer
+int N; // tamanho do buffer
+int np; // número de threads produtoras
+int nc; // número de threads consumidoras
 int *buffer;
 int in = 0, out = 0, item_produzido = 1, item_consumido = 1;
+int filled_positions;
+int *filled_positions_history;
+int history_index = 0;
 sem_t empty, full; // empty representa a quantidade de posições vazias e o full a quantidade de posições ocupadas
 pthread_mutex_t mutex; // controla o acesso ao buffer
 clock_t start;
-int *filled_positions_history;
-int history_index = 0;
 
 void push(int value) {
     filled_positions_history[history_index] = value;
@@ -153,9 +156,5 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < nc+np; i++) {
         pthread_join(tid[i], NULL);
     }
-
-    free(buffer);
-    free(filled_positions_history);
-
     return 0;
 }

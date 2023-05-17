@@ -11,7 +11,7 @@ volatile atomic_flag lock = ATOMIC_FLAG_INIT;
 long long int sum = 0;
 int num_threads;
 
-char *vector;
+int *vector;
 
 void acquire() {
     while (atomic_flag_test_and_set(&lock)); // busy wait
@@ -41,14 +41,11 @@ int main(int argc, char** argv) {
         return 1;
     }
     num_threads = atoi(argv[1]);
-    //struct timespec start, end;
-    vector = malloc(N * sizeof(char));
-    //clock_gettime(CLOCK_REALTIME, &start);
+    vector = malloc(N * sizeof(int));
     srand(time(NULL)); //inicializa o gerador de números aleatórios com a hora
     for (int i = 0; i < N; i++) {
         vector[i] = (rand() % 201) - 100; // preenche o vetor com números aleatórios no intervalo [-100, 100]
     }
-    //clock_gettime(CLOCK_REALTIME, &end);
     pthread_t threads[num_threads];
     int thread_ids[num_threads];
     for (int i = 0; i < num_threads; i++) {
